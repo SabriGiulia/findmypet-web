@@ -127,7 +127,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 20px;
       list-style: none;
     }
 
@@ -135,7 +135,8 @@
       text-decoration: none;
       color: var(--text-secondary);
       font-weight: 600;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
+      white-space: nowrap;
       transition: color 0.2s ease;
     }
 
@@ -146,6 +147,11 @@
     .btn-primary {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1.2;
       gap: 8px;
       background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
       color: #FFFFFF;
@@ -168,6 +174,11 @@
     .btn-secondary {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1.2;
       gap: 8px;
       background: var(--bg-surface);
       color: var(--text-primary);
@@ -702,7 +713,7 @@
       <div>
         <div class="hero-brand-Identity">
           <img src="assets/logo.png" alt="Insignia FindMyPet" />
-          <span>Red Comunitaria 100% Solidaria • +16 Años</span>
+          <span>Red Comunitaria 100% Solidaria • Para personas +16 años</span>
         </div>
         <h1>Ayudamos a que cada mascota perdida <span class="highlight">vuelva a casa</span>.</h1>
         <p>
@@ -713,6 +724,7 @@
           <a href="privacy.html" class="btn-secondary">🔒 Política de Privacidad</a>
         </div>
         <div class="trust-pills">
+          <div class="trust-pill">🔞 Para personas mayores de 16 años (+16)</div>
           <div class="trust-pill">📍 Ubicación Protegida (1-2 cuadras)</div>
           <div class="trust-pill">🏷️ Chapita QR Gratuita</div>
           <div class="trust-pill">🤝 Sin Recompensas Económicas</div>
@@ -847,11 +859,14 @@
         <div class="brand-showcase-logo">
           <img src="assets/logo.png" alt="Logo Grande FindMyPet" />
         </div>
-        <h2>Sumate hoy a la comunidad FindMyPet</h2>
-        <p>
+        <div style="display:inline-block;background:rgba(255,107,107,0.18);border:1px solid rgba(255,107,107,0.45);color:#FF9E9E;font-weight:700;font-size:0.85rem;padding:6px 16px;border-radius:999px;margin-bottom:16px;">
+          🔞 Aplicación destinada a personas mayores de 16 años (+16)
+        </div>
+        <h2 style="text-align:center;">Sumate hoy a la comunidad FindMyPet</h2>
+        <p style="text-align:center;line-height:1.65;">
           Cada vecino que se suma en tu ciudad multiplica las posibilidades de que un perrito, gatito u otra mascota perdida vuelva sana y salva con su familia.
         </p>
-        <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;">
           <a href="mailto:soporte.findmypet@gmail.com?subject=Consulta%20App%20FindMyPet" class="btn-primary">📱 Disponible en Android / Google Play</a>
           <a href="privacy.html" class="btn-secondary" style="background:rgba(255,255,255,0.1);color:#FFF;border-color:rgba(255,255,255,0.25);">Ver Política de Privacidad</a>
         </div>
