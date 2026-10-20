@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FindMyPet — Red Solidaria de Búsqueda y Rescate de Mascotas</title>
+  <meta name="description" content="FindMyPet conecta a dueños, vecinos, refugios y veterinarias para que cada mascota perdida vuelva a casa. Mapa GPS, Chapita QR inteligente, Afiche PDF e Inteligencia Artificial." />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-warm: #FFF7F5;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --coral: #FF6B6B;
+      --coral-dark: #E05252;
+      --coral-soft: #FFE4E4;
+      --teal: #14B8A6;
+      --teal-soft: #CCFBF1;
+      --blue: #3B82F6;
+      --blue-soft: #DBEAFE;
+      --amber: #F59E0B;
+      --amber-soft: #FEF3C7;
+      --border: #E2E8F0;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 20px 40px -12px rgba(15, 23, 42, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .brand-name span {
+      color: var(--coral);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--coral);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 8px 20px -4px rgba(255, 107, 107, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -4px rgba(255, 107, 107, 0.55);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 12px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--coral);
+      color: var(--coral);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 64px 24px 72px;
+      background: radial-gradient(circle at 85% 15%, #FFE4E4 0%, rgba(255, 228, 228, 0) 45%),
+                  radial-gradient(circle at 10% 80%, #CCFBF1 0%, rgba(204, 251, 241, 0) 40%),
+                  var(--bg-primary);
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--coral-soft);
+      color: var(--coral-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .trust-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card {
+      background: var(--bg-surface);
+      padding: 14px;
+      border-radius: 28px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .floating-badge {
+      position: absolute;
+      bottom: -18px;
+      left: 24px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 14px 20px;
+      border-radius: 18px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .floating-badge strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .floating-badge span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 84px 24px;
+    }
+
+    .section-alt {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 56px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+    }
+
+    /* FEATURES BENTO GRID */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    /* STEPS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .step-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px 26px;
+      position: relative;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--coral);
+      color: #FFF;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    /* SOLIDARITY & COMMERCE BANNER */
+    .split-banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .info-panel {
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      border: 1px solid var(--border);
+    }
+
+    .info-panel.coral {
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFE4E4 100%);
+      border-color: #FECACA;
+    }
+
+    .info-panel.teal {
+      background: linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 100%);
+      border-color: #99F6E4;
+    }
+
+    .info-panel h3 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .info-panel p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    /* FAQ */
+    .faq-list {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    details.faq-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    details.faq-item summary {
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    details.faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.faq-item p {
+      margin-top: 12px;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #0F172A;
+      color: #F8FAFC;
+      padding: 64px 24px 36px;
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .footer h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #FFFFFF;
+    }
+
+    .footer ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: #FF6B6B;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 28px auto 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      color: #64748B;
+      font-size: 0.85rem;
+      gap: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .hero-container,
+      .features-grid,
+      .steps-grid,
+      .split-banner,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      .floating-badge {
+        position: static;
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="Logo FindMyPet" />
+        <span class="brand-name">Find<span>My</span>Pet</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#funciones">Funciones</a></li>
+        <li><a href="#como-funciona">Cómo Funciona</a></li>
+        <li><a href="#comunidad">Comunidad y Comercios</a></li>
+        <li><a href="#faq">Preguntas Frecuentes</a></li>
+        <li><a href="privacy.html">Privacidad y Términos</a></li>
+      </ul>
+      <a href="#descargar" class="btn-primary">🐾 Descargar App</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="descargar">
+    <div class="hero-container">
+      <div>
+        <div class="badge-pill">🐾 Red Comunitaria 100% Solidaria • +16 Años</div>
+        <h1>Ayudamos a que cada mascota perdida <span class="highlight">vuelva a casa</span>.</h1>
+        <p>
+          Conectamos a vecinos, familias, veterinarias y refugios en tiempo real con mapa interactivo GPS, chapitas QR inteligentes para collar, afiches PDF automáticos y búsqueda con Inteligencia Artificial.
+        </p>
+        <div class="hero-actions">
+          <a href="#funciones" class="btn-primary">Explorar Funciones</a>
+          <a href="privacy.html" class="btn-secondary">🔒 Política de Privacidad</a>
+        </div>
+        <div class="trust-pills">
+          <div class="trust-pill">📍 Ubicación Protegida (1-2 cuadras)</div>
+          <div class="trust-pill">🏷️ Chapita QR Gratuita</div>
+          <div class="trust-pill">🤝 Sin Recompensas Económicas</div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card">
+          <img src="assets/hero-pets.jpg" alt="Perro y gato detectives de FindMyPet" />
+        </div>
+        <div class="floating-badge">
+          <div>
+            <strong>🔍 Búsqueda Activa por Cercanía</strong>
+            <span>Alertas en radios de 1 km, 3 km, 4 km, 10 km y filtro por ciudad</span>
+          </div>
+          <span style="background:#DCFCE7;color:#15803D;font-weight:800;font-size:0.8rem;padding:6px 12px;border-radius:999px;">EN VIVO</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FUNCIONES PRINCIPALES -->
+  <section class="section section-alt" id="funciones">
+    <div class="container">
+      <div class="section-header">
+        <h2>Todo lo necesario para un reencuentro feliz</h2>
+        <p>Herramientas diseñadas especialmente para actuar rápido cuando una mascota se pierde o cuando encontrás una en la calle.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: var(--coral-soft);">📍</div>
+          <h3>Mapa Interactivo y Cercanía</h3>
+          <p>Visualizá mascotas perdidas y encontradas en tu zona (1, 3, 4, 10 km o toda tu ciudad). Por seguridad, la ubicación exacta se protege mostrando un radio aproximado de 1 a 2 cuadras.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: var(--teal-soft);">🏷️</div>
+          <h3>Pasaporte y Chapita QR</h3>
+          <p>Creá el perfil digital de tu mascota y descargá gratis su chapita con código QR lista para imprimir. Quien la escanee en la calle verá su ficha de emergencia y podrá contactarte al instante.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: var(--blue-soft);">📄</div>
+          <h3>Afiches PDF e Historias</h3>
+          <p>Generá con un solo toque un cartel A4 de "¡SE BUSCA!" o "¡MASCOTA ENCONTRADA!" listo para imprimir y pegar en el barrio, o formato vertical para compartir en redes sociales.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: var(--amber-soft);">🤖</div>
+          <h3>Búsqueda con Inteligencia Artificial</h3>
+          <p>Describí cómo es la mascota o usá el comparador visual con IA (Google Gemini) para encontrar coincidencias rápidas entre los reportes activos de tu ciudad.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #F3E8FF;">💬</div>
+          <h3>Chat Privado en Tiempo Real</h3>
+          <p>Comunicate de forma directa y segura dentro de la app entre quien reportó y el dueño, con notificaciones push instantáneas y sin exponer tu teléfono personal públicamente.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #DCFCE7;">🌐</div>
+          <h3>Acceso Libre y Comunidad Segura</h3>
+          <p>Explorá los casos cercanos con Acceso Libre sin registro obligatorio, e iniciá sesión con Google o correo verificado cuando necesites publicar un reporte o enviar mensajes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="container">
+      <div class="section-header">
+        <h2>¿Cómo funciona FindMyPet?</h2>
+        <p>En menos de 2 minutos podés activar la búsqueda en tu barrio o ayudar a un animalito encontrado.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Publicá o Explorá en tu Zona</h3>
+          <p>Entrá en Modo Libre para ver mascotas cercanas o publicá un reporte en 5 pasos simples subiendo foto, especie, color, señales particulares y barrio.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Difusión con PDF, Mapa y QR</h3>
+          <p>Tu aviso aparece al instante en el mapa de vecinos cercanos. Descargá el afiche PDF con código QR para imprimirlo o compartirlo por WhatsApp e Instagram.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Chateá y Marcá el Reencuentro</h3>
+          <p>Recibí mensajes en tiempo real cuando alguien vea a tu mascota. Una vez en casa, marcá el caso como "¡Reencontrado!" para celebrar con la comunidad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMUNIDAD Y COMERCIOS -->
+  <section class="section section-alt" id="comunidad">
+    <div class="container">
+      <div class="split-banner">
+        <div class="info-panel coral">
+          <h3>🚫 Política de Cero Recompensas Económicas</h3>
+          <p>
+            En <strong>FindMyPet</strong> creemos en la solidaridad genuina entre vecinos. Para prevenir estafas, extorsiones o retenciones indebidas, <strong>está prohibido ofrecer o solicitar dinero o recompensas públicas</strong> dentro de los reportes, afiches y chats de la plataforma.
+          </p>
+          <a href="privacy.html#no-recompensas" class="btn-secondary">Conocer Normas de Seguridad</a>
+        </div>
+
+        <div class="info-panel teal">
+          <h3>🏥 Veterinarias, Refugios y Comercios Amigos</h3>
+          <p>
+            ¿Tenés una veterinaria, pet shop o comercio de barrio? Sumate <strong>100% gratis</strong> al mapa de Comercios Amigos y recibí tu cartel oficial con código QR para tu vidriera, ayudando a difundir mascotas perdidas de tu zona.
+          </p>
+          <a href="mailto:soporte.findmypet@gmail.com?subject=Sumar%20Comercio%20o%20Veterinaria%20a%20FindMyPet" class="btn-primary">Sumar mi Comercio Gratis</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PREGUNTAS FRECUENTES -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2>Preguntas Frecuentes</h2>
+        <p>Respuestas rápidas sobre el funcionamiento, privacidad y seguridad de FindMyPet.</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>¿Necesito registrarme para ver las mascotas perdidas en mi ciudad? <span>＋</span></summary>
+          <p>No. Podés ingresar tocando <strong>"Entrar en Acceso Libre"</strong> para explorar el listado de mascotas cercanas. Solo te pediremos iniciar sesión y verificar tu cuenta si querés publicar un reporte o chatear con otro usuario.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Por qué la ubicación en el mapa muestra un radio de 1 a 2 cuadras? <span>＋</span></summary>
+          <p>Por privacidad y seguridad de los usuarios, FindMyPet nunca expone la dirección exacta de un domicilio particular, sino una zona aproximada de 1 a 2 cuadras alrededor del punto reportado.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Cómo funciona la Chapita QR Inteligente? <span>＋</span></summary>
+          <p>Desde la sección <strong>Mi Cuenta / Mis Mascotas</strong> podés registrar a tu mascota y generar su chapita con código QR. Si tu mascota se extravía y alguien escanea el QR con la cámara de su celular, se abrirá una página web de emergencia con sus datos y botón de contacto directo.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Cómo puedo eliminar mi cuenta y mis datos personales? <span>＋</span></summary>
+          <p>Podés eliminar tu cuenta y todos tus datos de manera inmediata desde la propia aplicación entrando en <strong>Mi Cuenta &gt; Eliminar cuenta definitivamente</strong>, o solicitándolo por correo a <a href="mailto:soporte.findmypet@gmail.com">soporte.findmypet@gmail.com</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom: 14px;">
+          <img src="assets/logo.png" alt="Logo FindMyPet" />
+          <span class="brand-name" style="color: #FFF;">Find<span>My</span>Pet</span>
+        </div>
+        <p style="color: #94A3B8; font-size: 0.92rem; max-width: 380px;">
+          La red solidaria de búsqueda, rescate y reencuentro de mascotas. Diseñada para mayores de 16 años con protección de privacidad y herramientas gratuitas de difusión.
+        </p>
+      </div>
+
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#funciones">Funciones de la App</a></li>
+          <li><a href="#como-funciona">Cómo Funciona</a></li>
+          <li><a href="#comunidad">Veterinarias y Comercios</a></li>
+          <li><a href="#faq">Preguntas Frecuentes</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Legal y Soporte</h4>
+        <ul>
+          <li><a href="privacy.html">Política de Privacidad y Condiciones</a></li>
+          <li><a href="privacy.html#eliminacion-datos">Eliminación de Cuenta y Datos</a></li>
+          <li><a href="mailto:soporte.findmypet@gmail.com">soporte.findmypet@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 FindMyPet. Todos los derechos reservados.</span>
+      <span>Hecho con ❤️ para que todas las mascotas vuelvan a casa.</span>
+    </div>
+  </footer>
+
+</body>
+</html>

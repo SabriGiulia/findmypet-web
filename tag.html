@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Chapita Inteligente - FindMyPet</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background: #F8FAFC;
+      color: #0F172A;
+      display: flex;
+      justify-content: center;
+      padding: 16px;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: #FFFFFF;
+      border-radius: 28px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      border: 1px solid #E2E8F0;
+      display: flex;
+      flex-direction: column;
+    }
+    .header-banner {
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+      padding: 20px 20px 16px;
+      color: #FFFFFF;
+      text-align: center;
+    }
+    .header-logo {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.95;
+      margin-bottom: 6px;
+    }
+    .header-title {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+    .photo-wrapper {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      background: #E2E8F0;
+    }
+    .photo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .status-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 16px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .content {
+      padding: 22px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pet-identity {
+      text-align: center;
+    }
+    .pet-name {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0F172A;
+    }
+    .pet-breed {
+      font-size: 14.5px;
+      color: #64748B;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .reward-box {
+      background: #FEF3C7;
+      border: 1.5px dashed #F59E0B;
+      color: #92400E;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      border: none;
+      transition: transform 0.1s ease, filter 0.1s ease;
+    }
+    .btn:active {
+      transform: scale(0.98);
+      filter: brightness(0.95);
+    }
+    .btn-call {
+      background: #10B981;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+    }
+    .btn-whatsapp {
+      background: #25D366;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    }
+    .btn-location {
+      background: #3B82F6;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+    }
+    .card-info {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .info-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .info-row strong {
+      color: #0F172A;
+    }
+    .medical-alert {
+      background: #FFFBEB;
+      border-left: 4px solid #F59E0B;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: #92400E;
+      line-height: 1.4;
+    }
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 12px;
+      color: #94A3B8;
+      border-top: 1px solid #F1F5F9;
+      background: #FFFFFF;
+    }
+    .footer strong {
+      color: #FF6B6B;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-banner">
+      <div class="header-logo">🐾 FindMyPet • Chapita de Collar</div>
+      <div class="header-title">¡Hola! Busco a mi familia 🥺</div>
+    </div>
+
+    <div class="photo-wrapper">
+      <img id="petPhoto" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=800&auto=format&fit=crop" alt="Foto Mascota" />
+      <div class="status-badge">
+        <span>📍</span> <span id="petAddress">Mascota con Familia</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="pet-identity">
+        <h1 class="pet-name" id="petName">Mi Mascota</h1>
+        <p class="pet-breed" id="petBreed">Perro / Gato</p>
+      </div>
+
+      <div class="reward-box" id="rewardBox" style="display:none;">
+        💰 <span id="rewardText">Recompensa Ofrecida</span>
+      </div>
+
+      <!-- Acciones de rescate directas -->
+      <div class="actions">
+        <a id="btnCall" href="#" class="btn btn-call">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          Llamar al Dueño Directamente
+        </a>
+
+        <a id="btnWhatsApp" href="#" target="_blank" class="btn btn-whatsapp">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm5.78 14.15c-.24.67-1.39 1.29-1.93 1.37-.5.08-1.14.12-3.67-.93-3.08-1.28-5.06-4.42-5.21-4.63-.16-.2-1.25-1.66-1.25-3.17 0-1.51.78-2.25 1.06-2.55.28-.3.62-.37.82-.37.21 0 .42 0 .6.01.2.01.46-.07.72.55.27.64.91 2.22.99 2.38.08.16.13.35.03.55-.1.2-.16.33-.31.51-.16.18-.33.4-.47.54-.16.15-.32.32-.14.63.19.32.83 1.36 1.78 2.21 1.23 1.09 2.26 1.43 2.58 1.59.32.16.51.13.7-.08.19-.21.82-.95 1.04-1.28.22-.32.44-.27.73-.16.3.11 1.88.89 2.2 1.05.32.16.54.24.62.38.08.13.08.78-.16 1.45z"/></svg>
+          Enviar WhatsApp con mi Aviso
+        </a>
+
+        <button id="btnShareLocation" class="btn btn-location" onclick="sendLocationToOwner()">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+          📍 Avisar mi Ubicación GPS al Dueño
+        </button>
+      </div>
+
+      <!-- Ficha de Datos Médicos y Cuidado -->
+      <div class="card-info">
+        <div class="info-title">📋 Información de la Mascota</div>
+        <div class="info-row">
+          <span>👤 <strong>Dueño/a:</strong></span> <span id="ownerName">Familia</span>
+        </div>
+        <div class="info-row">
+          <span>📞 <strong>Contacto Principal:</strong></span> <span id="displayPhone">Sin número</span>
+        </div>
+        <div class="info-row" id="rowSecondaryPhone" style="display:none;">
+          <span>🚨 <strong>Contacto Emergencia:</strong></span> <span id="displaySecondary"></span>
+        </div>
+        <div class="info-row">
+          <span>📍 <strong>Zona habitual:</strong></span> <span id="displayZone">Recoleta / Palermo</span>
+        </div>
+
+        <div class="medical-alert" id="medicalBox">
+          <strong>⚠️ Observaciones Médicas / Carácter:</strong>
+          <p id="medicalNotesText" style="margin-top:4px;">Sin notas registradas.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Protegido por la red comunitaria de <strong>FindMyPet</strong> 🐾
+    </div>
+  </div>
+
+  <script>
+    // Leer parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    const petName = params.get('name') || 'Mascota';
+    const petType = params.get('type') || 'dog';
+    const breed = params.get('breed') || (petType === 'dog' ? 'Perro' : 'Gato');
+    const phone = params.get('phone') || '';
+    const secondaryPhone = params.get('secondary') || '';
+    const notes = params.get('notes') || 'Es muy amigable, por favor cuidalo/a mientras nos encontramos.';
+    const photo = params.get('photo') || '';
+    const reward = params.get('reward') || '';
+    const address = params.get('address') || 'Comunidad FindMyPet';
+    const owner = params.get('owner') || 'Familia de ' + petName;
+
+    // Actualizar contenido visual
+    document.title = "Chapita de " + petName + " - FindMyPet";
+    document.getElementById('petName').textContent = petName;
+    document.getElementById('petBreed').textContent = breed;
+    document.getElementById('ownerName').textContent = owner;
+    document.getElementById('displayPhone').textContent = phone || 'No especificado';
+    document.getElementById('petAddress').textContent = address;
+    document.getElementById('displayZone').textContent = address;
+    document.getElementById('medicalNotesText').textContent = notes;
+
+    if (photo) {
+      document.getElementById('petPhoto').src = photo;
+    }
+
+    if (secondaryPhone) {
+      document.getElementById('rowSecondaryPhone').style.display = 'flex';
+      document.getElementById('displaySecondary').textContent = secondaryPhone;
+    }
+
+    if (reward) {
+      document.getElementById('rewardBox').style.display = 'block';
+      document.getElementById('rewardText').textContent = 'Recompensa ofrecida: ' + reward;
+    }
+
+    // Configurar enlace de llamada
+    if (phone) {
+      const cleanPhone = phone.replace(/[^0-9+]/g, '');
+      document.getElementById('btnCall').href = 'tel:' + cleanPhone;
+
+      // Configurar enlace de WhatsApp
+      const waMsg = encodeURIComponent("¡Hola! Acabo de escanear la chapita de " + petName + " en la calle. Lo/la tengo conmigo, ¿dónde nos encontramos para devolvértelo/a?");
+      document.getElementById('btnWhatsApp').href = 'https://wa.me/' + cleanPhone.replace('+', '') + '?text=' + waMsg;
+    } else {
+      document.getElementById('btnCall').style.display = 'none';
+      document.getElementById('btnWhatsApp').style.display = 'none';
+    }
+
+    // Función de geolocalización por navegador para avisar al dueño
+    function sendLocationToOwner() {
+      if (!navigator.geolocation) {
+        alert("La geolocalización no está soportada por tu navegador.");
+        return;
+      }
+
+      const btn = document.getElementById('btnShareLocation');
+      btn.textContent = "Obteniendo coordenadas GPS... ⏳";
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          btn.textContent = "¡Ubicación lista! Abriendo WhatsApp... ✅";
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+          const cleanPhone = phone.replace(/[^0-9]/g, '');
+          const locMsg = encodeURIComponent(
+            `¡Hola! Encontré a ${petName} en la calle. Te comparto mis coordenadas GPS exactas para que puedas venir a buscarlo/a: ${mapsLink}`
+          );
+
+          if (cleanPhone) {
+            window.location.href = `https://wa.me/${cleanPhone}?text=${locMsg}`;
+          } else {
+            alert(`Coordenadas: ${mapsLink}`);
+          }
+        },
+        (err) => {
+          btn.textContent = "📍 Avisar mi Ubicación GPS al Dueño";
+          alert("No se pudo obtener la ubicación GPS (" + err.message + "). Podés enviarle un mensaje por WhatsApp directamente.");
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+  </script>
+</body>
+</html>
